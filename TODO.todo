@@ -1,0 +1,53 @@
+
+requirements for todo list
+* postgres for our database
+*knex.js for our database migration, seeds and queries.
+*express.js for our routes and rendering
+*handlebars.js for our server side view templates
+*bootstrap for our UI
+
+##Full Stack Check List
+✔ Generate Express App @done (2017-04-21, 12:32:38 PM)
+✔ Create database/table @done (2017-04-21, 12:32:28 PM)
+✔ Seed table with sample data @done (2017-04-24, 4:01:20 PM)
+✔ List all records with GET /todo @done (2017-04-24, 9:36:38 PM)
+✔ Add bootstrap @done (2017-04-24, 10:21:25 PM)
+✔ Show new form with /todo/new @done (2017-04-24, 10:22:53 PM)
+✔ Create a record with POST /todo @done (2017-04-25, 12:40:32 AM)
+☐ Show one record with GET /todo/:id
+☐ Show an edit form with GET todo/:id/edit
+☐ Update a record with PUT /todo/:id
+☐ Delete a record with DELETE /todo/:id
+☐ Redirect on create / update / delete
+
+
+
+✔ 1. Generate Express App @done (2017-04-17, 7:55:37 PM)
+Used "express --view=hbs server"
+
+✔ 2. Create Database in postgres @done (2017-04-21, 12:16:28 PM)
+Used "sudo -u postgres createdb my_users"
+
+✔ 3. create a migrate table @done (2017-04-24, 7:04:11 PM)
+used "npm i knex pg --save"
+to install knex and pg into package json
+then
+"knex init" 
+to initalize the knexfile.js for db migrate todo table
+via "knex migrate:make todo"
+which creates migration table with timestamp_todo.js
+ edit it to have the fields in the exports.up table like so
+"return knex.schema.createTable('todo', (table) => {table.fieldtype('fieldname');}"
+then in drop table put
+return knex.schema.dropTable('todo')
+now can write to database my_users
+"knex migrate:lastest"
+only issue I had was the connection to user nfroese wasnt authenticating so postgres usename with password was created to resolve this issue.
+✔ 4. seed data @done (2017-04-24, 7:04:04 PM)
+was simply typing
+"knex seed:run"
+
+✔ 5. create a todo route @done (2017-04-24, 9:29:23 PM)
+this was done via putting in app.js a var todo route w app.use to redirect to routes/todo and adding a todo.js in the routes folder. Now we need to render the todo from the db via creating a knex file to connect to the database.
+
+
