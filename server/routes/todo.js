@@ -51,30 +51,45 @@ function validTodo(todo) {
         !isNaN(Number(todo.priority));
 };
 // after new form is submitted goes to this route posting to my_users db todo table from id with knex then redirect to localhost:3000/todo
-router.post('/', (req, res) => {
-    console.log("req.body ", req.body);
-    console.log("(validTodo(req.body)) ", (validTodo(req.body)));
+function insertUpdateRedirect(req, res, callback) {
     if (validTodo(req.body)) {
         let todo = {
             title: req.body.title,
             description: req.body.description,
             priority: req.body.priority,
-            date: new Date()
         };
         // inserting into the database
-        knex('todo')
-            .insert(todo, 'id')
-            .then(ids => {
-                const id = ids[0];
-                res.redirect(`/todo/${id}`);
-            });
-
+        callback(todo);
     } else {
         res.status(500);
         res.render('error', {
             message: 'Invalid todo'
         })
     }
+}
+
+router.post('/', (req, res) => {
+    insertUpdateRedirect(req, res, (todo) => {
+        todo.date = new Date();
+        knex('todo')
+            .insert(todo, 'id')
+            .then(ids => {
+                const id = ids[0];
+                res.redirect(`/todo/${id}`);
+            });
+    })
+});
+
+router.put('/:id', (req, res) => {
+    insertUpdateRedirect(req, res, (todo) => {
+        todo.date = new Date();
+        knex('todo')
+            .where(id, req.params.id)
+            .update(todo, 'id')
+            .then(() => {
+                res.redirect(`/todo/${req.params.id}`);
+            });
+    })
 });
 
 module.exports = router;

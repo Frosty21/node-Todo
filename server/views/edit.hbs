@@ -1,4 +1,4 @@
-<form class="form" action="/todo" method="put">
+<form class="form" action="/todo/{{id}}?_method=PUT" method="post">
   <div class="form-group">
     <label for="title">Title</label>
     <input value="{{title}}" type="text"class="form-control" id="title" placeholder="Enter a todo" name="title">
@@ -9,10 +9,12 @@
   </div>
   <div class="form-group">
     <label for="priority">Priority</label>
-    <select value="{{priority}}" class="form-control" id="priority" name="priority">
+    <select class="form-control" id="priority" name="priority">
+      {{#select priority}}
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
+      {{/select}}
     </select>
   </div>
   <button type="submit" class="btn btn-default btn-danger">

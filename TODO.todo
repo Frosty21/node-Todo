@@ -14,6 +14,9 @@ requirements for todo list
 ✔ Add bootstrap @done (2017-04-24, 10:21:25 PM)
 ✔ Show new form with /todo/new @done (2017-04-24, 10:22:53 PM)
 ✔ Create a record with POST /todo @done (2017-04-25, 12:40:32 AM)
+
+This is where my Postgres SQL was doing some weird ~Unhandled rejection error: invalid input syntax for integer: "new"
+
 ☐ Show one record with GET /todo/:id
 ☐ Show an edit form with GET todo/:id/edit
 ☐ Update a record with PUT /todo/:id
