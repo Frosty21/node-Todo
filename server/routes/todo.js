@@ -38,15 +38,19 @@ function insertUpdateRedirect(req, res, callback) {
         // inserting into the database
         callback(todo);
     } else {
-        res.status(500);
-        res.render('error', {
-            message: 'Invalid todo'
-        })
+        setStatusRenderError(res, 500, 'Invalid Todo');
     }
 }
 
 function validId(id) {
     return !isNaN(id);
+}
+
+function setStatusRenderError(res, statusCode, message) {
+    res.status(statusCode);
+    res.render('error', {
+        message
+    })
 }
 
 // ROUTES
@@ -117,10 +121,7 @@ router.delete('/:id', (req, res) => {
                 res.redirect('/todo');
             });
     } else {
-        res.status(500);
-        res.render('error', {
-            message: 'Invalid id'
-        })
+        setStatusRenderError(res, 500, 'Invalid Id');
     }
 })
 
