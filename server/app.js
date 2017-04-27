@@ -18,8 +18,16 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+const hbs = require('hbs');
+
+// found the select helper method from http://stackoverflow.com/questions/13046401/how-to-set-selected-select-option-in-handlebars-template
+hbs.registerHelper('select', function(selected, options) {
+        return options.fn(this).replace(
+            new RegExp(' value=\"' + selected + '\"'),
+            '$& selected="selected"');
+    })
+    // uncomment after placing your favicon in /public
+    //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

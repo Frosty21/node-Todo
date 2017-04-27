@@ -80,7 +80,7 @@ router.get('/:id/edit', (req, res) => {
     resRenderTodo(id, res, 'edit');
 })
 
-// after new form is submitted goes to this route posting to my_users db todo table from id with knex then redirect to localhost:3000/todo
+// after new form is submitted goes to this route posting to my_users db todo table from id with knex then redirect to localhost:3000/todo/id
 router.post('/', (req, res) => {
     console.log("going POST '/' route");
     insertUpdateRedirect(req, res, (todo) => {
@@ -97,14 +97,15 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
     console.log("going PUT '/:id' route");
     insertUpdateRedirect(req, res, (todo) => {
+        const id = req.params.id;
         todo.date = new Date();
         knex('todo')
-            .where(id, req.params.id)
+            .where('id', id)
             .update(todo, 'id')
             .then(() => {
-                res.redirect(`/todo/${req.params.id}`);
+                res.redirect(`/todo/${id}`);
             });
-    })
+    });
 });
 
 router.delete('/:id', (req, res) => {
