@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 const knex = require('../db/knex');
+const queries = require('../db/queries');
+
 
 // FUNCTIONS
 function validTodo(todo) {
@@ -13,10 +15,8 @@ function validTodo(todo) {
 
 function resRenderTodo(id, res, viewName) {
     if (validId(id)) {
-        knex('todo')
-            .select()
-            .where('id', id)
-            .first()
+        queries
+            .getOne(id)
             .then(todo => {
                 res.render(viewName, todo);
             });
@@ -53,8 +53,8 @@ function validId(id) {
 
 /* GET todo page. localhost:3000/todo/ */
 router.get('/', (req, res) => {
-    knex('todo')
-        .select()
+    queries
+        .getAll()
         .then(todos => {
             res.render('all', { todos: todos });
         })
@@ -85,8 +85,8 @@ router.post('/', (req, res) => {
     console.log("going POST '/' route");
     insertUpdateRedirect(req, res, (todo) => {
         todo.date = new Date();
-        knex('todo')
-            .insert(todo, 'id')
+        queries
+            .create(todo)
             .then(ids => {
                 const id = ids[0];
                 res.redirect(`/todo/${id}`);
@@ -99,9 +99,8 @@ router.put('/:id', (req, res) => {
     insertUpdateRedirect(req, res, (todo) => {
         const id = req.params.id;
         todo.date = new Date();
-        knex('todo')
-            .where('id', id)
-            .update(todo, 'id')
+        queries
+            .update(id, todo)
             .then(() => {
                 res.redirect(`/todo/${id}`);
             });
@@ -112,10 +111,8 @@ router.delete('/:id', (req, res) => {
     console.log("going DELETE '/:id' route");
     const id = req.params.id;
     if (validId(id)) {
-        knex('todo')
-            .select()
-            .where('id', id)
-            .del()
+        queries
+            .delete(id)
             .then(() => {
                 res.redirect('/todo');
             });
