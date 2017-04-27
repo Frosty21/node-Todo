@@ -8,10 +8,15 @@
   <div class="panel-footer">{{date}}</div>
 </div>
 <div>
-  <a type="button" class="btn btn-default btn-warning" href="/todo/{{:id}}/edit">
+  <form action="/todo/{{id}}?_method=DELETE" method="post">
+  <a type="button" class="btn btn-default btn-warning" href="/todo/{{id}}/edit">
     Edit Todo
   </a>
+    <button type="submit" class="btn btn-default btn-danger">
+      Delete Todo
+    </button>
   <a type="button" class="btn btn-default btn-primary" href="/todo/">
     Back to Todo
   </a>
+  </form>
 </div>

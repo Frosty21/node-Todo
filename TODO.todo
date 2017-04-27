@@ -16,12 +16,13 @@ requirements for todo list
 ✔ Create a record with POST /todo @done (2017-04-25, 12:40:32 AM)
 
 This is where my Postgres SQL was doing some weird ~Unhandled rejection error: invalid input syntax for integer: "new"
+figured it was the GET route '/new' being overwritten from GET ':id' so the solution was to '/new' above ':id' another way would be to use validate the request to the response
 
-☐ Show one record with GET /todo/:id
-☐ Show an edit form with GET todo/:id/edit
-☐ Update a record with PUT /todo/:id
-☐ Delete a record with DELETE /todo/:id
-☐ Redirect on create / update / delete
+✔ Show one record with GET /todo/:id @done (2017-04-26, 10:38:37 PM)
+✔ Show an edit form with GET todo/:id/edit @done (2017-04-26, 10:38:40 PM)
+✔ Update a record with PUT /todo/:id @done (2017-04-26, 10:38:42 PM)
+✔ Delete a record with DELETE /todo/:id @done (2017-04-26, 10:38:45 PM)
+✔ Redirect on create / update / delete @done (2017-04-26, 10:38:59 PM)
 
 
 
@@ -52,5 +53,6 @@ was simply typing
 
 ✔ 5. create a todo route @done (2017-04-24, 9:29:23 PM)
 this was done via putting in app.js a var todo route w app.use to redirect to routes/todo and adding a todo.js in the routes folder. Now we need to render the todo from the db via creating a knex file to connect to the database.
+
 
 
